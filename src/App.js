@@ -10,7 +10,7 @@ const CLIENT_SECRET = '';
 function App() {
 
   const [token, setToken] = useState('');
-  const [albums, setAlbums] = useState('');
+  const [albums, setAlbums] = useState([]);
 
   useEffect(() => {
     let authParameters = {
@@ -31,35 +31,52 @@ function App() {
   }, []);
 
   async function getPlaylist() {
-    let playlistRequest = {
+    
+    let playlistParameters = {
     method: 'GET',
     headers: 
       {'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + token,
+      'Authorization': 'Bearer ' + token
     
-  }
-}
-  // get my credits playlist
-    let albumID = await fetch ('https://api.spotify.com/v1/playlists/7iJI8La0UoPBAC2aCj4Oa0/tracks', playlistRequest)
-    .then(result => result.json())
-    // get album id from each track in the playlist
-    .then(data => {return data.track.items[0].album.id})
+      }
+    }
 
+    let albumID
+    // get my credits playlist
+    try {
+    // Fetch playlist data
+    const response = await fetch('https://api.spotify.com/v1/playlists/7iJI8La0UoPBAC2aCj4Oa0/tracks', playlistParameters);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    // Check if the structure of the response is correct
+    console.log(data);
+
+    // Assuming data is in the correct structure, get the album ID
+    albumID = data.items[0].track.album.id;
 
     console.log(albumID);
 
-  //   // get each album using album id and set to state
-  // // eslint-disable-next-line no-unused-vars
-    let returnedAlbums = await fetch('https://api.spotify.com/v1/albums/' + albumID, playlistRequest)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      setAlbums(data.items);
-    })
+  } catch (error) {
+    console.error('Error fetching playlist:', error);
+
+   // get each album using album id and set to state
+  
+  await fetch('https://api.spotify.com/v1/albums/' + albumID, playlistParameters)
+  .then(response => response.json())
+  .then(data => {
+    setAlbums(data.items);
+  })
+  }
+  
 }
 
 getPlaylist();
-// eslint-disable-next-line react-hooks/exhaustive-deps
+
 
 console.log(albums);
 
@@ -77,30 +94,30 @@ console.log(albums);
 
   return (
     <div className="App">
-       <div className='head'>
-          <h2>George Sheridan</h2>
-          <h4>Musician / Engineer / Producer</h4>
-        </div>
-       <div className='credits_title'>
+      <div className='head'>
+        <h2>George Sheridan</h2>
+        <h4>Musician / Engineer / Producer</h4>
+      </div>
+      <div className='credits_title'>
         <h5>Credits:</h5>
-       </div>
-       <div className='credit_tiles'>
+      </div>
+      <div className='credit_tiles'>
         <Container>
           <Row className='mx-2 row row-cols-4'>
-          {/* {albums.map( (album, i) => {
+            {albums && albums.map((album, i) => {
               console.log(album);
-            return (
-              <Card>
-            <Card.Img src={album.images[0].url}/>
-            <Card.Body>
-              <Card.Title>{album.name}</Card.Title>
-            </Card.Body>
-          </Card>
-            )
-          })} */}
-            </Row>
+              return (
+                <Card key={i}>
+                  <Card.Img src={album.images[0].url}/>
+                  <Card.Body>
+                    <Card.Title>{album.name}</Card.Title>
+                  </Card.Body>
+                </Card>
+              )
+            })}
+          </Row>
         </Container>
-       </div>
+      </div>
     </div>
   );
 }
