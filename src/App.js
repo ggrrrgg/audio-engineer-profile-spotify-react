@@ -5,11 +5,12 @@ import './App.css';
 import { useEffect, useState } from 'react';
 
 const CLIENT_ID = 'f9700cee755943ddb35762c10d83a4f6';
-const CLIENT_SECRET = '';
+const CLIENT_SECRET = '2a4d0dc01cdc44b48029f6fd432a75a4';
 
 function App() {
 
   const [token, setToken] = useState('');
+  const [albums, setAlbums] = useState('');
 
   useEffect(() => {
     let authParameters = {
@@ -25,17 +26,11 @@ function App() {
       .then(data => setToken(data.access_token))
 
     // console.log(token);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    
   }, []);
 
-  
-  const scopes = [
-    'playlist-read-collaborative',
-    'playlist-read-private'
-  ] 
-
-
-async function getPlaylist() {
+  async function getPlaylist() {
     let playlistRequest = {
     method: 'GET',
     headers: 
@@ -44,14 +39,40 @@ async function getPlaylist() {
     
   }
 }
-
-    let playlists = await fetch ('https://api.spotify.com/v1/playlists/7iJI8La0UoPBAC2aCj4Oa0/tracks', playlistRequest)
+  // get my credits playlist
+    let albumID = await fetch ('https://api.spotify.com/v1/playlists/7iJI8La0UoPBAC2aCj4Oa0/tracks', playlistRequest)
     .then(result => result.json())
+    // get album id from each track in the playlist
+    .then(data => {return data.track.items[0].album.id})
 
-    console.log(playlists);
+
+    console.log(albumID);
+
+  //   // get each album using album id and set to state
+  // // eslint-disable-next-line no-unused-vars
+    let returnedAlbums = await fetch('https://api.spotify.com/v1/albums/' + albumID, playlistRequest)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      setAlbums(data.items);
+    })
 }
 
 getPlaylist();
+// eslint-disable-next-line react-hooks/exhaustive-deps
+
+console.log(albums);
+
+  
+  // const scopes = [
+  //   'playlist-read-collaborative',
+  //   'playlist-read-private'
+  // ] 
+
+
+
+
+
 
 
   return (
@@ -66,17 +87,17 @@ getPlaylist();
        <div className='credit_tiles'>
         <Container>
           <Row className='mx-2 row row-cols-4'>
-          {playlists.map( (track, i) => {
-              console.log(track);
+          {/* {albums.map( (album, i) => {
+              console.log(album);
             return (
               <Card>
-            <Card.Img src={track.images[0].url}/>
+            <Card.Img src={album.images[0].url}/>
             <Card.Body>
-              <Card.Title>{track.name}</Card.Title>
+              <Card.Title>{album.name}</Card.Title>
             </Card.Body>
           </Card>
             )
-          })}
+          })} */}
             </Row>
         </Container>
        </div>
