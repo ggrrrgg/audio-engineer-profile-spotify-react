@@ -5,7 +5,7 @@ import './App.css';
 import { useEffect, useState } from 'react';
 
 const CLIENT_ID = 'f9700cee755943ddb35762c10d83a4f6';
-const CLIENT_SECRET = '2a4d0dc01cdc44b48029f6fd432a75a4';
+const CLIENT_SECRET = '';
 
 function App() {
 
