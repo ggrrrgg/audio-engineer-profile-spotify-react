@@ -5,7 +5,7 @@ import './App.css';
 import { useEffect, useState } from 'react';
 
 const CLIENT_ID = 'f9700cee755943ddb35762c10d83a4f6';
-const CLIENT_SECRET = '';
+const CLIENT_SECRET = '2a4d0dc01cdc44b48029f6fd432a75a4';
 
 function App() {
 
@@ -41,7 +41,7 @@ function App() {
       }
     }
 
-    let albumID
+    let albumID = []
     // get my credits playlist
     try {
     // Fetch playlist data
@@ -65,8 +65,24 @@ function App() {
     console.error('Error fetching playlist:', error);
 
    // get each album using album id and set to state
+
+   function removeDuplicates(albumID) {
+    const result = [];
   
-  await fetch('https://api.spotify.com/v1/albums/' + albumID, playlistParameters)
+    for (let i = 0; i < albumID.length; i++) {
+      if (result.indexOf(albumID[i]) === -1) {
+        result.push(albumID[i]);
+      }
+    }
+  
+    return result;
+  }
+
+  const uniqueAlbumIDs = await removeDuplicates(albumID);
+
+console.log(uniqueAlbumIDs);
+  
+  await fetch('https://api.spotify.com/v1/albums/' + uniqueAlbumIDs, playlistParameters)
   .then(response => response.json())
   .then(data => {
     setAlbums(data.items);
