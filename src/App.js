@@ -26,8 +26,10 @@ function App() {
       .then(data => setToken(data.access_token))
 
     // console.log(token);
-
+    // console.log(albums);
     
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function getPlaylist() {
@@ -40,7 +42,7 @@ function App() {
     
       }
     }
-
+    // albumID array
     let albumID = []
     // get my credits playlist
     try {
@@ -57,44 +59,65 @@ function App() {
     console.log(data);
 
     // Assuming data is in the correct structure, get the album ID
-    albumID = data.items[0].track.album.id;
+    albumID = data.items.map(item => item.track.album.id);
 
     console.log(albumID);
 
   } catch (error) {
     console.error('Error fetching playlist:', error);
 
-   // get each album using album id and set to state
+  }
 
-   function removeDuplicates(albumID) {
-    const result = [];
-  
-    for (let i = 0; i < albumID.length; i++) {
-      if (result.indexOf(albumID[i]) === -1) {
-        result.push(albumID[i]);
+
+    function removeDuplicates(albumID) {
+      const result = [];
+
+      for (let i = 0; i < albumID.length; i++) {
+        if (result.indexOf(albumID[i]) === -1) {
+          result.push(albumID[i]);
+        }
       }
+
+      return result;
     }
-  
-    return result;
-  }
 
-  const uniqueAlbumIDs = await removeDuplicates(albumID);
+    const uniqueAlbumIDs = await removeDuplicates(albumID);
 
-console.log(uniqueAlbumIDs);
-  
-  await fetch('https://api.spotify.com/v1/albums/' + uniqueAlbumIDs, playlistParameters)
-  .then(response => response.json())
-  .then(data => {
-    setAlbums(data.items);
-  })
-  }
-  
+    // console.log(uniqueAlbumIDs);
+
+    function removeEmptyAndSpaces(arr) {
+      return arr.filter(item => item && item.trim());
+    }
+    
+    const cleanAlbumIDs = removeEmptyAndSpaces(uniqueAlbumIDs);
+
+    const cleanAlbumIDsString = cleanAlbumIDs.join(',');
+    console.log(cleanAlbumIDsString);
+
+    let albumParameters = {
+      method: 'GET',
+      headers: 
+        {
+        'Authorization': 'Bearer ' + token
+      
+        }
+      }
+
+    await fetch('https://api.spotify.com/v1/albums?ids=' + cleanAlbumIDsString + '?markets=US', albumParameters)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      setAlbums(data.albums);
+    })
+
+    
 }
+    getPlaylist();
 
-getPlaylist();
+    useEffect(() => {
+      console.log(albums);
+    }, [albums]);
 
-
-console.log(albums);
 
   
   // const scopes = [
@@ -118,21 +141,20 @@ console.log(albums);
         <h5>Credits:</h5>
       </div>
       <div className='credit_tiles'>
-        <Container>
-          <Row className='mx-2 row row-cols-4'>
-            {albums && albums.map((album, i) => {
-              console.log(album);
-              return (
-                <Card key={i}>
-                  <Card.Img src={album.images[0].url}/>
-                  <Card.Body>
-                    <Card.Title>{album.name}</Card.Title>
-                  </Card.Body>
-                </Card>
-              )
-            })}
-          </Row>
-        </Container>
+      <Container>
+        <Row className='mx-2 row row-cols-4'>
+          {albums.albums && albums.albums.map((album) => {
+            return (
+              <Card key={album.id}>
+                <Card.Img src={album.images[0].url}/>
+                <Card.Body>
+                  <Card.Title>{album.name}</Card.Title>
+                </Card.Body>
+              </Card>
+            )
+          })}
+        </Row>
+      </Container>
       </div>
     </div>
   );
