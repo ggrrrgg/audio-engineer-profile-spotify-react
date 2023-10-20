@@ -10,7 +10,7 @@ const CLIENT_SECRET = '2a4d0dc01cdc44b48029f6fd432a75a4';
 function App() {
 
   const [token, setToken] = useState('');
-  const [albums, setAlbums] = useState([]);
+  const [creditAlbums, setCreditAlbums] = useState([]);
 
   useEffect(() => {
     let authParameters = {
@@ -25,14 +25,18 @@ function App() {
       .then(result => result.json())
       .then(data => setToken(data.access_token))
 
-    // console.log(token);
-    // console.log(albums);
-    
-    
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log(token);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function getPlaylist() {
+  useEffect(() => {
+    if (token) {
+      getAlbums();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
+
+  async function getAlbums() {
     
     let playlistParameters = {
     method: 'GET',
@@ -58,7 +62,7 @@ function App() {
     // Check if the structure of the response is correct
     console.log(data);
 
-    // Assuming data is in the correct structure, get the album ID
+    // Assuming data, get the album ID
     albumID = data.items.map(item => item.track.album.id);
 
     console.log(albumID);
@@ -103,33 +107,19 @@ function App() {
         }
       }
 
-    await fetch('https://api.spotify.com/v1/albums?ids=' + cleanAlbumIDsString + '?markets=US', albumParameters)
+    let returnedAlbums = await fetch('https://api.spotify.com/v1/albums?ids=' + cleanAlbumIDsString + '?markets=US', albumParameters)
     .then(response => response.json())
     .then(data => {
-      console.log(data)
-      setAlbums(data.albums);
+      // console.log(data)
+      console.log('Before setAlbums:', data.albums);
+    setCreditAlbums(data.albums);
+      console.log('After setAlbums:', creditAlbums);
     })
 
     
 }
-    getPlaylist();
-
-    useEffect(() => {
-      console.log(albums);
-    }, [albums]);
-
-
-  
-  // const scopes = [
-  //   'playlist-read-collaborative',
-  //   'playlist-read-private'
-  // ] 
-
-
-
-
-
-
+    getAlbums();
+  console.log(creditAlbums);
 
   return (
     <div className="App">
@@ -142,18 +132,18 @@ function App() {
       </div>
       <div className='credit_tiles'>
       <Container>
-        <Row className='mx-2 row row-cols-4'>
-          {albums.albums && albums.albums.map((album) => {
-            return (
-              <Card key={album.id}>
-                <Card.Img src={album.images[0].url}/>
-                <Card.Body>
-                  <Card.Title>{album.name}</Card.Title>
-                </Card.Body>
-              </Card>
-            )
-          })}
-        </Row>
+            <Row className='mx-2 row row-cols-4'>
+        {creditAlbums.map((album) => {
+          return (
+            <Card key={album.id}>
+              <Card.Img src={album.images[0].url} alt={album.name} />
+              <Card.Body>
+                <Card.Title>{album.name}</Card.Title>
+              </Card.Body>
+            </Card>
+          )
+        })}
+      </Row>
       </Container>
       </div>
     </div>
