@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Card } from 'react-bootstrap';
 import './App.css';
 import { useEffect, useState } from 'react';
+import { Spotify } from 'react-spotify-embed';
 
 const CLIENT_ID = 'f9700cee755943ddb35762c10d83a4f6';
 const CLIENT_SECRET = '2a4d0dc01cdc44b48029f6fd432a75a4';
@@ -111,15 +112,26 @@ function App() {
     .then(response => response.json())
     .then(data => {
       // console.log(data)
-      console.log('Before setAlbums:', data.albums);
-    setCreditAlbums(data.albums);
-      console.log('After setAlbums:', creditAlbums);
+    //   console.log('Before setAlbums:', data.albums);
+    // setCreditAlbums(data.albums);
+    //   console.log('After setAlbums:', creditAlbums);
+    console.log('Raw data.albums:', data.albums);
+    let filteredData = data.albums.filter(album => album != null);
+    console.log('Filtered albums: ', filteredData);
+    return filteredData;
     })
+
+    setCreditAlbums(returnedAlbums);
 
     
 }
-    getAlbums();
-  console.log(creditAlbums);
+
+    useEffect (() => {
+      if (creditAlbums)
+      console.log('Album state updated ', creditAlbums);
+    }, [creditAlbums])
+  //   getAlbums();
+  // console.log(creditAlbums);
 
   return (
     <div className="App">
@@ -133,20 +145,21 @@ function App() {
       <div className='credit_tiles'>
       <Container>
             <Row className='mx-2 row row-cols-4'>
-        {creditAlbums.map((album) => {
-          return (
-            <Card key={album.id}>
-              <Card.Img src={album.images[0].url} alt={album.name} />
-              <Card.Body>
-                <Card.Title>{album.name}</Card.Title>
-              </Card.Body>
-            </Card>
-          )
-        })}
-      </Row>
+                {creditAlbums.map((album) => {
+                  return (
+                    <Card key={album.id}>
+                      <Card.Img src={album.images[0].url} alt={album.name} />
+                      <Card.Body>
+                        <Card.Title>{album.name} - {album.artists[0].name} </Card.Title>
+                        <Card.Title><Spotify wide link={album.external_urls.spotify}></Spotify></Card.Title>
+                      </Card.Body>
+                    </Card>
+                   )
+                })}
+            </Row>
       </Container>
       </div>
-    </div>
+  </div>
   );
 }
 
