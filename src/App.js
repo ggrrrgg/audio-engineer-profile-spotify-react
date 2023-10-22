@@ -4,6 +4,7 @@ import { Container, Row, Card } from 'react-bootstrap';
 import './App.css';
 import { useEffect, useState } from 'react';
 import { Spotify } from 'react-spotify-embed';
+import footer from './footer';
 
 const CLIENT_ID = 'f9700cee755943ddb35762c10d83a4f6';
 const CLIENT_SECRET = '2a4d0dc01cdc44b48029f6fd432a75a4';
@@ -26,7 +27,7 @@ function App() {
       .then(result => result.json())
       .then(data => setToken(data.access_token))
 
-    console.log(token);
+    // console.log(token);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -122,8 +123,6 @@ function App() {
     })
 
     setCreditAlbums(returnedAlbums);
-
-    
 }
 
     useEffect (() => {
@@ -144,7 +143,7 @@ function App() {
       </div>
       <div className='credit_tiles'>
       <Container>
-            <Row className='mx-2 row row-cols-4'>
+            <Row className='mx-2 row row-cols-3'>
                 {creditAlbums.map((album) => {
                   return (
                     <Card key={album.id}>
@@ -159,6 +158,7 @@ function App() {
             </Row>
       </Container>
       </div>
+      <div>{footer}</div>
   </div>
   );
 }
