@@ -5,6 +5,7 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import { Spotify } from 'react-spotify-embed';
 import footer from './footer';
+// import BandcampPlayer from 'react-bandcamp';
 
 const CLIENT_ID = 'f9700cee755943ddb35762c10d83a4f6';
 const CLIENT_SECRET = '2a4d0dc01cdc44b48029f6fd432a75a4';
@@ -155,6 +156,38 @@ function App() {
                     </Card>
                    )
                 })}
+                <Card >
+                  
+                  <Card.Body>
+                      <iframe title='cf'class= 'embed-responsive embed-responsive-16by9'style={{border: '0', width: '100%', height: '100%'}} 
+                      src="https://bandcamp.com/EmbeddedPlayer/album=3276653023/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
+                        <a href="https://colourfields1.bandcamp.com/album/body-objects">Body Objects by Colourfields</a></iframe>
+                  </Card.Body>
+                </Card>
+                <Card >
+                  
+                  <Card.Body>
+                  <iframe title='wearevfar'style={{border: '0', width: '100%', height: '100%' }}
+                  src="https://bandcamp.com/EmbeddedPlayer/album=2463401670/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
+                    <a href="https://grownocean.bandcamp.com/album/we-are-very-far">We Are Very Far by Grown Ocean</a></iframe>
+                  </Card.Body>
+                </Card>
+                <Card >
+                  
+                  <Card.Body>
+                  <iframe title='enzo'style={{border: '0', width: '100%', height: '100%' }}
+                  src="https://bandcamp.com/EmbeddedPlayer/album=191477950/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
+                    <a href="https://enzolunch.bandcamp.com/album/early-lunch">Early Lunch by Enzo Lunch</a></iframe>
+                  </Card.Body>
+                </Card>
+                <Card >
+                  
+                  <Card.Body>
+                  <iframe title='triplex'style={{border: '0', width: '100%', height: '100%' }}
+                  src="https://bandcamp.com/EmbeddedPlayer/album=2787108074/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
+                    <a href="https://triplex1.bandcamp.com/album/into-the-void">INTO THE VOID by TRIPLEX</a></iframe>
+                  </Card.Body>
+                </Card>
             </Row>
       </Container>
       </div>
