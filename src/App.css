@@ -2,6 +2,45 @@
   text-align: center;
 }
 
+.credit_tiles {
+    overflow-y: overlay;
+    height: 100vh;
+    flex: 0.8;
+    color: white;
+    padding: 30px;
+    background: black;
+    
+}
+
+.head {
+  color: white;
+    padding: 30px;
+    background: black;
+}
+
+.credits_title  {
+  color: white;
+    padding: 30px;
+    background: black;
+}
+
+.credit_tiles::-webkit-scrollbar {
+  display: none;
+}
+
+.all_cards {
+  background-color: black;
+  padding: 0px;
+}
+
+.spoti_card {
+
+  background-color: black;
+}
+
+.bandcamp_tile {
+  background-color: black;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

@@ -143,20 +143,20 @@ function App() {
         <h5>Credits:</h5>
       </div>
       <div className='credit_tiles'>
-      <Container>
+      <Container class='position-relative' className='all_cards'>
             <Row className='mx-2 row row-cols-3'>
                 {creditAlbums.map((album) => {
                   return (
-                    <Card key={album.id}>
+                    <Card className='spoti_card' key={album.id}>
                       <Card.Img src={album.images[0].url} alt={album.name} />
                       <Card.Body>
-                        <Card.Title>{album.name} - {album.artists[0].name} </Card.Title>
+                        {/* <Card.Title>{album.name} - {album.artists[0].name} </Card.Title> */}
                         <Card.Title><Spotify wide link={album.external_urls.spotify}></Spotify></Card.Title>
                       </Card.Body>
                     </Card>
                    )
                 })}
-                <Card >
+                <Card className='bandcamp_tile'>
                   
                   <Card.Body>
                       <iframe title='cf'class= 'embed-responsive embed-responsive-16by9'style={{border: '0', width: '100%', height: '100%'}} 
@@ -164,26 +164,26 @@ function App() {
                         <a href="https://colourfields1.bandcamp.com/album/body-objects">Body Objects by Colourfields</a></iframe>
                   </Card.Body>
                 </Card>
-                <Card >
+                <Card className='bandcamp_tile'>
                   
                   <Card.Body>
-                  <iframe title='wearevfar'style={{border: '0', width: '100%', height: '100%' }}
+                  <iframe title='wearevfar'class= 'embed-responsive embed-responsive-16by9'style={{border: '0', width: '100%', height: '100%' }}
                   src="https://bandcamp.com/EmbeddedPlayer/album=2463401670/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
                     <a href="https://grownocean.bandcamp.com/album/we-are-very-far">We Are Very Far by Grown Ocean</a></iframe>
                   </Card.Body>
                 </Card>
-                <Card >
+                <Card className='bandcamp_tile'>
                   
                   <Card.Body>
-                  <iframe title='enzo'style={{border: '0', width: '100%', height: '100%' }}
+                  <iframe title='enzo'class= 'embed-responsive embed-responsive-16by9'style={{border: '0', width: '100%', height: '100%' }}
                   src="https://bandcamp.com/EmbeddedPlayer/album=191477950/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
                     <a href="https://enzolunch.bandcamp.com/album/early-lunch">Early Lunch by Enzo Lunch</a></iframe>
                   </Card.Body>
                 </Card>
-                <Card >
+                <Card className='bandcamp_tile'>
                   
                   <Card.Body>
-                  <iframe title='triplex'style={{border: '0', width: '100%', height: '100%' }}
+                  <iframe title='triplex'class= 'embed-responsive embed-responsive-16by9'style={{border: '0', width: '100%', height: '100%' }}
                   src="https://bandcamp.com/EmbeddedPlayer/album=2787108074/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
                     <a href="https://triplex1.bandcamp.com/album/into-the-void">INTO THE VOID by TRIPLEX</a></iframe>
                   </Card.Body>
