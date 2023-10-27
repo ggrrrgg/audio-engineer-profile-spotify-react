@@ -76,19 +76,8 @@ function App() {
   }
 
 
-    function removeDuplicates(albumID) {
-      const result = [];
-
-      for (let i = 0; i < albumID.length; i++) {
-        if (result.indexOf(albumID[i]) === -1) {
-          result.push(albumID[i]);
-        }
-      }
-
-      return result;
-    }
-
-    const uniqueAlbumIDs = await removeDuplicates(albumID);
+    // remove duplicates by saving as a set
+    const uniqueAlbumIDs = await [...new Set(albumID)]
 
     // console.log(uniqueAlbumIDs);
 
@@ -106,17 +95,12 @@ function App() {
       headers: 
         {
         'Authorization': 'Bearer ' + token
-      
-        }
       }
+    }
 
     let returnedAlbums = await fetch('https://api.spotify.com/v1/albums?ids=' + cleanAlbumIDsString + '?markets=US', albumParameters)
     .then(response => response.json())
     .then(data => {
-      // console.log(data)
-    //   console.log('Before setAlbums:', data.albums);
-    // setCreditAlbums(data.albums);
-    //   console.log('After setAlbums:', creditAlbums);
     console.log('Raw data.albums:', data.albums);
     let filteredData = data.albums.filter(album => album != null);
     console.log('Filtered albums: ', filteredData);
@@ -143,7 +127,7 @@ function App() {
         <h5>Credits:</h5>
       </div>
       <div className='credit_tiles'>
-      <Container class='position-relative' className='all_cards'>
+      <Container fluid class='position-relative' className='all_cards'>
             <Row className='mx-2 row row-cols-3'>
                 {creditAlbums.map((album) => {
                   return (
