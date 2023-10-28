@@ -1,29 +1,61 @@
 .App {
-  text-align: center;
+  background: black;
 }
 
 .credit_tiles {
-    overflow-y: overlay;
-    height: 100vh;
+    overflow-y: scroll;
+    height: auto;
     flex: 0.8;
     color: white;
     padding: 30px;
     background: black;
-    
-    
-    
 }
 
 .head {
   color: white;
     padding: 30px;
     background: black;
+    
+}
+
+.head > h2 {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.head > h4 {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.head > h6 {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.insta {
+  display: flex;
+  justify-content: flex-end;
+  background-color: black;
+  color: white;
+  margin-bottom: 6px;
+}
+
+.fb {
+  display: flex;
+  justify-content: flex-end;
+  background-color: black;
+  color: white;
+  margin-bottom: 6px;
 }
 
 .credits_title  {
-  color: white;
-    padding: 30px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    padding: 14px;
     background: black;
+    margin-left: 46px;
 }
 
 .credit_tiles::-webkit-scrollbar {

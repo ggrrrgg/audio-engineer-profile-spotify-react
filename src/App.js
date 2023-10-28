@@ -4,8 +4,9 @@ import { Container, Row, Card } from 'react-bootstrap';
 import './App.css';
 import { useEffect, useState } from 'react';
 import { Spotify } from 'react-spotify-embed';
-import footer from './footer';
-// import BandcampPlayer from 'react-bandcamp';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import FacebookIcon from '@mui/icons-material/Facebook';
+
 
 const CLIENT_ID = 'f9700cee755943ddb35762c10d83a4f6';
 const CLIENT_SECRET = '2a4d0dc01cdc44b48029f6fd432a75a4';
@@ -122,13 +123,20 @@ function App() {
       <div className='head'>
         <h2>George Sheridan</h2>
         <h4>Musician / Engineer / Producer</h4>
+        <h6>email: george.sheridan@gmail.com</h6>
+        <a href="https://www.instagram.com/georgesheridann/" target="_blank" rel="noreferrer" className="insta">
+          <InstagramIcon />
+        </a>
+        <a href="https://www.facebook.com/george.sheridan.12" target="_blank" rel="noreferrer" className="fb">
+          <FacebookIcon />
+        </a>
       </div>
       <div className='credits_title'>
-        <h5>Credits:</h5>
+        <h4>Credits:</h4>
       </div>
       <div className='credit_tiles'>
-      <Container fluid class='position-relative' className='all_cards'>
-            <Row className='mx-2 row row-cols-3'>
+      <Container class='position-relative' className='all_cards'>
+            <Row className='mx-2 row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3'>
                 {creditAlbums.map((album) => {
                   return (
                     <Card className='spoti_card' key={album.id}>
@@ -140,34 +148,33 @@ function App() {
                     </Card>
                    )
                 })}
-                <Card className='bandcamp_tile'>
-                  
+                <Card class='col'className='bandcamp_tile'>
                   <Card.Body>
-                      <iframe title='cf'class= 'embed-responsive embed-responsive-16by9'style={{border: '0', width: '100%', height: '100%'}} 
+                      <iframe title='cf'class= 'embed-responsive embed-responsive-16by9'style={{border: '0', width: '100%', height: '500px'}} 
                       src="https://bandcamp.com/EmbeddedPlayer/album=3276653023/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
                         <a href="https://colourfields1.bandcamp.com/album/body-objects">Body Objects by Colourfields</a></iframe>
                   </Card.Body>
                 </Card>
-                <Card className='bandcamp_tile'>
-                  
+
+                <Card class='col'className='bandcamp_tile'>  
                   <Card.Body>
-                  <iframe title='wearevfar'class= 'embed-responsive embed-responsive-16by9'style={{border: '0', width: '100%', height: '100%' }}
+                  <iframe title='wearevfar'class= ''style={{border: '0', width: '100%', height: '500px' }}
                   src="https://bandcamp.com/EmbeddedPlayer/album=2463401670/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
                     <a href="https://grownocean.bandcamp.com/album/we-are-very-far">We Are Very Far by Grown Ocean</a></iframe>
                   </Card.Body>
                 </Card>
-                <Card className='bandcamp_tile'>
-                  
+
+                <Card class='col'className='bandcamp_tile'>
                   <Card.Body>
-                  <iframe title='enzo'class= 'embed-responsive embed-responsive-16by9'style={{border: '0', width: '100%', height: '100%' }}
+                  <iframe title='enzo'class= 'embed-responsive embed-responsive-16by9'style={{border: '0', width: '100%', height: '500px' }}
                   src="https://bandcamp.com/EmbeddedPlayer/album=191477950/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
                     <a href="https://enzolunch.bandcamp.com/album/early-lunch">Early Lunch by Enzo Lunch</a></iframe>
                   </Card.Body>
                 </Card>
-                <Card className='bandcamp_tile'>
-                  
+
+                <Card class='col'className='bandcamp_tile'> 
                   <Card.Body>
-                  <iframe title='triplex'class= 'embed-responsive embed-responsive-16by9'style={{border: '0', width: '100%', height: '100%' }}
+                  <iframe title='triplex'class= 'embed-responsive embed-responsive-16by9'style={{border: '0', width: '100%', height: '500px' }}
                   src="https://bandcamp.com/EmbeddedPlayer/album=2787108074/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
                     <a href="https://triplex1.bandcamp.com/album/into-the-void">INTO THE VOID by TRIPLEX</a></iframe>
                   </Card.Body>
@@ -175,7 +182,7 @@ function App() {
             </Row>
       </Container>
       </div>
-      <div>{footer}</div>
+      
   </div>
   );
 }
