@@ -69,6 +69,7 @@ function App() {
     // Assuming data, get the album ID
     albumID = data.items.map(item => item.track.album.id);
 
+
     console.log(albumID);
 
   } catch (error) {
@@ -79,7 +80,7 @@ function App() {
 
     // remove duplicates by saving as a set
     const uniqueAlbumIDs = await [...new Set(albumID)]
-
+    
     // console.log(uniqueAlbumIDs);
 
     function removeEmptyAndSpaces(arr) {
@@ -99,11 +100,15 @@ function App() {
       }
     }
 
-    let returnedAlbums = await fetch('https://api.spotify.com/v1/albums?ids=' + cleanAlbumIDsString + '?markets=US', albumParameters)
+    let returnedAlbums = await fetch('https://api.spotify.com/v1/albums?ids=' + cleanAlbumIDsString + '&markets=US', albumParameters)
     .then(response => response.json())
     .then(data => {
-    console.log('Raw data.albums:', data.albums);
-    let filteredData = data.albums.filter(album => album != null);
+    console.log('Raw data albums:', data.albums);
+    let orderedData = data.albums.sort((albumA, albumB) => albumB.release_date.localeCompare(albumA.release_date));
+    // let orderedData = data.albums.sort(album => album.release_date)
+    let filteredData = orderedData.filter(album => album != null);
+
+    
     console.log('Filtered albums: ', filteredData);
     return filteredData;
     })
@@ -179,7 +184,24 @@ function App() {
                     <a href="https://triplex1.bandcamp.com/album/into-the-void">INTO THE VOID by TRIPLEX</a></iframe>
                   </Card.Body>
                 </Card>
-            </Row>
+
+                <Card class='col'className='bandcamp_tile'> 
+                  <Card.Body>
+                  <iframe title='3070'style={{border: '0', width: '100%', height: '500px' }} 
+                  src="https://bandcamp.com/EmbeddedPlayer/album=2830375107/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/track=1068104892/transparent=true/" seamless>
+                    <a href="https://thirtyseventy.bandcamp.com/album/30-70-remix-tape">30/70 Remix Tape by George Sheridan</a></iframe>
+                  </Card.Body>
+                </Card>
+                
+                <Card class='col'className='bandcamp_tile'> 
+                  <Card.Body>
+                  <iframe title='ma'style={{border: '0', width: '100%', height: '500px' }} 
+                  src="https://bandcamp.com/EmbeddedPlayer/album=1264425630/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/track=541352634/transparent=true/" seamless>
+                    <a href="https://mamusic.bandcamp.com/album/across-the-city-and-into-your-remix-2">Across the City and Into Your REMIX by MA</a></iframe>
+                  </Card.Body>
+                </Card>
+                
+          </Row>
       </Container>
       </div>
       
