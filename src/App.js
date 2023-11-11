@@ -9,20 +9,21 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 
 
 const CLIENT_ID = 'f9700cee755943ddb35762c10d83a4f6';
-const CLIENT_SECRET = '2a4d0dc01cdc44b48029f6fd432a75a4';
+const REACT_APP_CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET
 
 function App() {
 
   const [token, setToken] = useState('');
   const [creditAlbums, setCreditAlbums] = useState([]);
 
+  // request spotify token on page load
   useEffect(() => {
     let authParameters = {
       method:'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
+      body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + REACT_APP_CLIENT_SECRET
 
     }
     fetch('https://accounts.spotify.com/api/token', authParameters)
@@ -33,6 +34,7 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // then request albums
   useEffect(() => {
     if (token) {
       getAlbums();
@@ -40,6 +42,7 @@ function App() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
+  // request albums from user playlist
   async function getAlbums() {
     
     let playlistParameters = {
@@ -50,11 +53,11 @@ function App() {
     
       }
     }
+
     // albumID array
     let albumID = []
     // get my credits playlist
     try {
-    // Fetch playlist data
     const response = await fetch('https://api.spotify.com/v1/playlists/7iJI8La0UoPBAC2aCj4Oa0/tracks', playlistParameters);
 
     if (!response.ok) {
@@ -64,25 +67,22 @@ function App() {
     const data = await response.json();
 
     // Check if the structure of the response is correct
-    console.log(data);
+    // console.log(data);
 
-    // Assuming data, get the album ID
+    // Assuming data, get the album ID from each track in the playlist
     albumID = data.items.map(item => item.track.album.id);
-
-
-    console.log(albumID);
-
+    
+    // console.log(albumID);
   } catch (error) {
     console.error('Error fetching playlist:', error);
 
   }
-
-
+    
     // remove duplicates by saving as a set
     const uniqueAlbumIDs = await [...new Set(albumID)]
     
     // console.log(uniqueAlbumIDs);
-
+    // prepare album IDs or album request
     function removeEmptyAndSpaces(arr) {
       return arr.filter(item => item && item.trim());
     }
@@ -90,8 +90,8 @@ function App() {
     const cleanAlbumIDs = removeEmptyAndSpaces(uniqueAlbumIDs);
 
     const cleanAlbumIDsString = cleanAlbumIDs.join(',');
-    console.log(cleanAlbumIDsString);
-
+    // console.log(cleanAlbumIDsString);
+    // make request for albums
     let albumParameters = {
       method: 'GET',
       headers: 
@@ -103,26 +103,26 @@ function App() {
     let returnedAlbums = await fetch('https://api.spotify.com/v1/albums?ids=' + cleanAlbumIDsString + '&markets=US', albumParameters)
     .then(response => response.json())
     .then(data => {
-    console.log('Raw data albums:', data.albums);
+    // console.log('Raw data albums:', data.albums);
+    // Reorder albums by their release date, most recent first
     let orderedData = data.albums.sort((albumA, albumB) => albumB.release_date.localeCompare(albumA.release_date));
-    // let orderedData = data.albums.sort(album => album.release_date)
+    // filter any albums that return null
     let filteredData = orderedData.filter(album => album != null);
 
     
-    console.log('Filtered albums: ', filteredData);
+    // console.log('Filtered albums: ', filteredData);
     return filteredData;
     })
-
+    // set album list to state
     setCreditAlbums(returnedAlbums);
 }
-
-    useEffect (() => {
-      if (creditAlbums)
-      console.log('Album state updated ', creditAlbums);
-    }, [creditAlbums])
-  //   getAlbums();
-  // console.log(creditAlbums);
-
+    // check album state is updating correctly
+    // useEffect (() => {
+    //   if (creditAlbums)
+    //   console.log('Album state updated ', creditAlbums);
+    // }, [creditAlbums])
+ 
+  //simple bootstrap layout 
   return (
     <div className="App">
       <div className='head'>
@@ -139,6 +139,7 @@ function App() {
       <div className='credits_title'>
         <h4>Credits:</h4>
       </div>
+      {/* page tiles from spotify */}
       <div className='credit_tiles'>
       <Container class='position-relative' className='all_cards'>
             <Row className='mx-2 row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3'>
@@ -147,15 +148,15 @@ function App() {
                     <Card className='spoti_card' key={album.id}>
                       <Card.Img src={album.images[0].url} alt={album.name} />
                       <Card.Body>
-                        {/* <Card.Title>{album.name} - {album.artists[0].name} </Card.Title> */}
                         <Card.Title><Spotify wide link={album.external_urls.spotify}></Spotify></Card.Title>
                       </Card.Body>
                     </Card>
                    )
                 })}
+        {/* page tiles rom bandcamp */}
                 <Card class='col'className='bandcamp_tile'>
                   <Card.Body>
-                      <iframe title='cf'class= 'embed-responsive embed-responsive-16by9'style={{border: '0', width: '100%', height: '500px'}} 
+                      <iframe title='cf'style={{border: '0', width: '100%', height: '500px'}} 
                       src="https://bandcamp.com/EmbeddedPlayer/album=3276653023/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
                         <a href="https://colourfields1.bandcamp.com/album/body-objects">Body Objects by Colourfields</a></iframe>
                   </Card.Body>
@@ -163,7 +164,7 @@ function App() {
 
                 <Card class='col'className='bandcamp_tile'>  
                   <Card.Body>
-                  <iframe title='wearevfar'class= ''style={{border: '0', width: '100%', height: '500px' }}
+                  <iframe title='wearevfar'style={{border: '0', width: '100%', height: '500px' }}
                   src="https://bandcamp.com/EmbeddedPlayer/album=2463401670/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
                     <a href="https://grownocean.bandcamp.com/album/we-are-very-far">We Are Very Far by Grown Ocean</a></iframe>
                   </Card.Body>
@@ -171,7 +172,7 @@ function App() {
 
                 <Card class='col'className='bandcamp_tile'>
                   <Card.Body>
-                  <iframe title='enzo'class= 'embed-responsive embed-responsive-16by9'style={{border: '0', width: '100%', height: '500px' }}
+                  <iframe title='enzo'style={{border: '0', width: '100%', height: '500px' }}
                   src="https://bandcamp.com/EmbeddedPlayer/album=191477950/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
                     <a href="https://enzolunch.bandcamp.com/album/early-lunch">Early Lunch by Enzo Lunch</a></iframe>
                   </Card.Body>
@@ -179,7 +180,7 @@ function App() {
 
                 <Card class='col'className='bandcamp_tile'> 
                   <Card.Body>
-                  <iframe title='triplex'class= 'embed-responsive embed-responsive-16by9'style={{border: '0', width: '100%', height: '500px' }}
+                  <iframe title='triplex'style={{border: '0', width: '100%', height: '500px' }}
                   src="https://bandcamp.com/EmbeddedPlayer/album=2787108074/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
                     <a href="https://triplex1.bandcamp.com/album/into-the-void">INTO THE VOID by TRIPLEX</a></iframe>
                   </Card.Body>
