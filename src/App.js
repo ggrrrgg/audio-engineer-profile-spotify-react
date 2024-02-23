@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Spotify } from 'react-spotify-embed';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import backgroundImage from './docs/cassettesplat.png'
 
 
 const CLIENT_ID = 'f9700cee755943ddb35762c10d83a4f6';
@@ -124,28 +125,40 @@ function App() {
  
   //simple bootstrap layout 
   return (
-    <div className="App">
-      <div className='head'>
+    <div className="App" style={{ 
+      backgroundImage: `url(${backgroundImage})`, 
+      backgroundSize: 'contain', 
+      backgroundPosition: 'center',
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+    }}>
+      <div className='head' 
+      style={{ backgroundColor: 'rgba(255, 255, 255, 0)', color: '#ffffff', textShadow: '2px 2px 2px #000000' }}>
         <h2>George Sheridan</h2>
         <h4>Musician / Engineer / Producer</h4>
         <h6>email: george.sheridan@gmail.com</h6>
-        <a href="https://www.instagram.com/georgesheridann/" target="_blank" rel="noreferrer" className="insta">
+        <a href="https://www.instagram.com/georgesheridann/" target="_blank" rel="noreferrer" 
+        className="insta" 
+        style={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}>
           <InstagramIcon />
         </a>
-        <a href="https://www.facebook.com/george.sheridan.12" target="_blank" rel="noreferrer" className="fb">
+        <a href="https://www.facebook.com/george.sheridan.12" target="_blank" rel="noreferrer" 
+        className="fb"
+        style={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}>
           <FacebookIcon />
         </a>
       </div>
-      <div className='credits_title'>
+      <div className='credits_title' style={{ backgroundColor: 'rgba(255, 255, 255, 0)', color: '#ffffff', textShadow: '2px 2px 2px #000000' }}>
         <h4>Credits:</h4>
       </div>
       {/* page tiles from spotify */}
-      <div className='credit_tiles'>
-      <Container class='position-relative' className='all_cards'>
+      <div className='credit_tiles' style={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}>
+      <Container class='position-relative' className='all_cards' style={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}>
             <Row className='mx-2 row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3'>
                 {creditAlbums.map((album) => {
                   return (
-                    <Card className='spoti_card' key={album.id}>
+                    <Card className='spoti_card' key={album.id} style={{ border: 0, backgroundColor: 'rgba(255, 255, 255, 0)' }}>
                       <Card.Img src={album.images[0].url} alt={album.name} />
                       <Card.Body>
                         <Card.Title><Spotify wide link={album.external_urls.spotify}></Spotify></Card.Title>
@@ -154,7 +167,7 @@ function App() {
                    )
                 })}
         {/* page tiles rom bandcamp */}
-                <Card class='col'className='bandcamp_tile'>
+                <Card class='col'className='bandcamp_tile' style={{ border: 0, backgroundColor: 'rgba(255, 255, 255, 0)' }}>
                   <Card.Body>
                       <iframe title='cf'style={{border: '0', width: '100%', height: '500px'}} 
                       src="https://bandcamp.com/EmbeddedPlayer/album=3276653023/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
@@ -162,7 +175,7 @@ function App() {
                   </Card.Body>
                 </Card>
 
-                <Card class='col'className='bandcamp_tile'>  
+                <Card class='col'className='bandcamp_tile' style={{ border: 0, backgroundColor: 'rgba(255, 255, 255, 0)' }}>  
                   <Card.Body>
                   <iframe title='wearevfar'style={{border: '0', width: '100%', height: '500px' }}
                   src="https://bandcamp.com/EmbeddedPlayer/album=2463401670/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
@@ -170,7 +183,7 @@ function App() {
                   </Card.Body>
                 </Card>
 
-                <Card class='col'className='bandcamp_tile'>
+                <Card class='col'className='bandcamp_tile' style={{ border: 0, backgroundColor: 'rgba(255, 255, 255, 0)' }}>
                   <Card.Body>
                   <iframe title='enzo'style={{border: '0', width: '100%', height: '500px' }}
                   src="https://bandcamp.com/EmbeddedPlayer/album=191477950/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
@@ -178,7 +191,7 @@ function App() {
                   </Card.Body>
                 </Card>
 
-                <Card class='col'className='bandcamp_tile'> 
+                <Card class='col'className='bandcamp_tile' style={{ border: 0, backgroundColor: 'rgba(255, 255, 255, 0)' }}> 
                   <Card.Body>
                   <iframe title='triplex'style={{border: '0', width: '100%', height: '500px' }}
                   src="https://bandcamp.com/EmbeddedPlayer/album=2787108074/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless>
@@ -186,7 +199,7 @@ function App() {
                   </Card.Body>
                 </Card>
 
-                <Card class='col'className='bandcamp_tile'> 
+                <Card class='col'className='bandcamp_tile' style={{ border: 0, backgroundColor: 'rgba(255, 255, 255, 0)' }}> 
                   <Card.Body>
                   <iframe title='3070'style={{border: '0', width: '100%', height: '500px' }} 
                   src="https://bandcamp.com/EmbeddedPlayer/album=2830375107/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/track=1068104892/transparent=true/" seamless>
@@ -194,7 +207,7 @@ function App() {
                   </Card.Body>
                 </Card>
                 
-                <Card class='col'className='bandcamp_tile'> 
+                <Card class='col'className='bandcamp_tile' style={{ border: 0, backgroundColor: 'rgba(255, 255, 255, 0)' }}> 
                   <Card.Body>
                   <iframe title='ma'style={{border: '0', width: '100%', height: '500px' }} 
                   src="https://bandcamp.com/EmbeddedPlayer/album=1264425630/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/track=541352634/transparent=true/" seamless>
