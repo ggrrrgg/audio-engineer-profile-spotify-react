@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { Spotify } from 'react-spotify-embed';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import backgroundImage from './docs/cassettesplat.png'
+import backgroundImage from './docs/cassettesplat_resize.jpg'
 
 
 const CLIENT_ID = 'f9700cee755943ddb35762c10d83a4f6';
