@@ -117,11 +117,6 @@ function App() {
     // set album list to state
     setCreditAlbums(returnedAlbums);
 }
-    // check album state is updating correctly
-    // useEffect (() => {
-    //   if (creditAlbums)
-    //   console.log('Album state updated ', creditAlbums);
-    // }, [creditAlbums])
  
   //simple bootstrap layout 
   return (
